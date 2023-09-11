@@ -3,3 +3,4 @@
 /docker/mysql/*
 /docker/postgres/*
 /docker/redis/data/*
+.env
