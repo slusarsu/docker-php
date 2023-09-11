@@ -9,20 +9,33 @@ ARG uid
 RUN apt-get update && apt-get install -y \
     git \
     curl \
-    libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libgd-dev \
+    libwebp-dev \
+    jpegoptim optipng pngquant gifsicle \
     zip \
     cron \
+    sudo \
     unzip \
     redis-tools \
-    nano
+    nano \
+    npm \
+    nodejs \
+    imagemagick
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd iconv intl xml soap opcache pdo mysqli mbstring
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd iconv intl xml soap opcache pdo mysqli
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
