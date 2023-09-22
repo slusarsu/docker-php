@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     libgd-dev \
     libwebp-dev \
     jpegoptim optipng pngquant gifsicle \
+    libzip-dev \
     zip \
     cron \
     sudo \
@@ -35,7 +36,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd iconv intl xml soap opcache pdo mysqli
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd iconv intl xml soap opcache pdo mysqli zip
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
