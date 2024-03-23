@@ -3,5 +3,6 @@
 /docker/mysql/*
 /docker/postgres/*
 /docker/redis/data/*
+/docker/mongodb/data/*
 /.env
 .env

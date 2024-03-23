@@ -26,9 +26,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     redis-tools \
     nano \
-    npm \
+    imagemagick \
     nodejs \
-    imagemagick
+    npm
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

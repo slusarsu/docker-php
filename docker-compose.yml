@@ -23,7 +23,7 @@ services:
       - './docker/nginx/conf.d:/etc/nginx/conf.d'
 
   mysql:
-    image: mysql:8
+    image: mysql:latest
     container_name: ${CONTAINER_NAME_PREFIX}-mysql
     restart: unless-stopped
     tty: true
@@ -33,6 +33,28 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - './docker/mysql:/var/lib/mysql'
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${CONTAINER_NAME_PREFIX}-phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: ${MYSQL_PORT}
+      PMA_ARBITRARY: 1
+
+#  mongo-db:
+#    image: mongo:latest
+#    container_name: ${CONTAINER_NAME_PREFIX}-mongo-db
+#    ports:
+#      - 27017:27017
+#    volumes:
+#      - './docker/mongodb/data/db:/data/db'
+
 #
 #  postgres:
 #    image: postgres:14.1-alpine
@@ -58,3 +80,14 @@ services:
 #      - './docker/redis/data:/data'
 #      - /etc/timezone:/etc/timezone:ro
 #      - /etc/localtime:/etc/localtime:ro
+
+#  smtp:
+#    platform: linux/x86_64
+#    image: mailhog/mailhog:latest
+#    container_name: docker-workspace-smtp
+#    logging:
+#      driver: 'none'
+#    ports:
+#      - "8003:1025"
+#      - "8100:8025"
+
